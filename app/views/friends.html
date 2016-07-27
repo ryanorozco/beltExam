@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Friends on Friends on Friends...</title>
+	<style>
+		body {
+			font-family: Helvetica;
+		}
+
+		header {
+			display: block;
+			height: 50px;
+			border: .5px solid black;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			font-family: Helvetica;
+			background: blue;
+			color: white;
+		}
+
+		h3#welcome {
+			text-align: left;
+			margin: 10px 0 0 20px;
+			display: inline-block;
+			font-family: Helvetica;
+		}
+
+		form input {
+			font-family: Helvetica;
+		}
+
+		#logout {
+			text-align: right;
+			margin-right: 10px;
+			margin-top: 10px;
+		}
+
+		#logoutButton {
+			background: linear-gradient(red, white);
+			border-radius: 8px;
+			border: 1px solid grey;
+		}
+
+		thead {
+			font-size: 150%;
+		}
+
+		table {
+			margin-top: 10px;
+		}
+
+		th {
+			margin: 5px;
+			padding: 20px;
+			width: 200px;
+
+
+		}
+
+
+		body {
+			margin: 10px;
+		}
+		.stack{
+			display: inline-block;
+
+		}
+		#actionStack{
+			width: 350px;
+		}
+	</style>
+</head>
+<header>
+	<h3 id='welcome'>Welcome, {{ session['currentUser']['alias'] }}</h3>
+</header>
+
+<body>
+	<form id='logout' action='/logout' method='GET'>
+		<input id='logoutButton' type='submit' name='logout' value='Log Out'>
+	</form>
+	<h3> Here are your friends in a nice and tidy list!</h3>
+
+	<table>
+		<thead>
+			<th>Alias</th>
+			<th>Action</th>
+		</thead>
+		<tbody>
+			{% for friend in friendArray%}
+			<tr>
+				<th>{{friend['alias']}}</th>
+				<th id="actionStack">
+					<a href='/users/{{ friend['id'] }}'>View Profile  </a>
+					<form class="stack" id="removeFriend" action="/removeFriend" method="POST">
+						<input type="hidden" name="userId" value="{{ session['currentUser']['id']}}" />
+						<input type="hidden" name="friendId" value="{{ friend['id']}}" />
+						<input type='submit' value="Remove Friend">
+					</form>
+				</th>
+			</tr>
+		</tbody>
+		{% endfor %}
+	</table>
+
+	<h4>People you may want to FRIEND!</h4>
+	<table>
+		<thead>
+			<tr>
+				<th>Alias</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for newbie in newbieArray%}
+			<tr>
+				<th><a href="/users/{{ newbie['id'] }}">{{ newbie['alias'] }}</a></th>
+				<th>
+					<form action="/addFriend" method="POST">
+						<input type="hidden" name="userId" value="{{ session['currentUser']['id']}}" />
+						<input type='hidden' name='friendId' value="{{ newbie['id']}}" />
+						<input type="submit" value="ADD FRIEND!" />
+					</form>
+				</th>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <title>{{ userArray[0]['alias'] }}</title>
+  <style>
+    h4{
+      vertical-align: top;
+      margin-left: 700px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id='nav'>
+      <h4><a href='/friends'>Home</a> | <a href='/logout'>Logout</a></h4>
+
+    </div>
+
+    <h2>{{ userArray[0]['alias'] }}'s Profile</h2><br />
+
+    <p>Name: {{ userArray[0]['name'] }}</p><br />
+    <p>Email Address: {{ userArray[0]['email'] }}</p>
+
+  </div>
+</body>
+</html>
